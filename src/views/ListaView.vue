@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <div class="">
-      <h2 v-show="local.length > 0">Tu lista🎬</h2>
+      <h2 v-show="local.length > 0">Deliciosas Aventuras en la Cocina: Explora, Cocina y Disfruta con Nuestras Irresistibles Recetas</h2>
 
       <div class="row">
         <div class="col-md-4" v-for="item in local" :key="item.fecha">
           <div class="card d-flex flex-column">
-            <img src="img/form.jpg" class="card-img-top" alt="Imagen del castillo de Disney">
-            <h3 class="card-title"><span>Nombre: {{ item.title }}</span></h3>
+            <img src="img/form.jpg" class="card-img-top" alt="Imagen de comida">
+            <h3 class="card-title"><span>{{ item.title }}</span></h3>
             <p class="card-text mb-auto"><span>Descripcion: {{ item.descripcion }}</span></p>
-            <p class="card-text mb-auto"><span>Temática: </span>
+            <p class="card-text mb-auto"><span>Tipo de receta: </span>
               <span class="normal" v-for="(x, index) in item.selected" :key="index">{{ x }}</span>
             </p>
-            <p><span>Estreno: {{ item.estreno }}</span></p>
+            
 
-            <p><span>¿Has visto esta película antes? </span>
-              <span v-if="item.seenBefore">Sí, la he visto</span>
+            <p><span>¿Has hecho esta receta ntes? </span>
+              <span v-if="item.seenBefore">Sí</span>
 <span v-else>No, es la primera vez</span>
             </p>
 
@@ -61,7 +61,7 @@ mounted:function(){
     }
 
     if (this.local.length === 0) {
-      this.sin_datos = "Carga todas las películas que quieras ver este fin de semana! 🍿🎬❤";
+      this.sin_datos = "Carga todas las recetas que quieras hacer! ❤";
     }
   },    borrar:function(item){
               

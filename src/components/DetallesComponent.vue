@@ -1,178 +1,107 @@
- <div class="detalles">
-      <ol reversed>
-
-        <li v-for="item in pelis" :key="item.id">{{item.titulo}}
-          <router-link :to="'/editar/' + item.title + '/' + item.descripcion + '/' + item.selected + '/' + item.estreno + '/' + item.fecha"
-  class="editar boton" > Ver Detalle </router-link>
-        </li>
-      </ol> 
-  </div><template>
-
-        
-
-
+<template>
   <div class="container">
     <div class="row">
-      <div v-for="(item, index) in peliculas" :key="index" class="col-md-4 mb-3">
+      <div v-for="(receta, index) in recetas" :key="index" class="col-md-4 mb-3">
         <div class="card h-100 d-flex flex-column">
-          <img :src="item.img" :alt="item.titulo" class="card-img-top">
+          <img :src="receta.img" :alt="receta.titulo" class="card-img-top">
           <div class="card-body d-flex flex-column">
-            <h3 class="card-title">{{ item.titulo | capitalize }}</h3>
-            <p class="card-text mb-auto">{{ item.descripcion }}</p>
-            <p class="card-text mb-auto"><strong>Año: {{ item.anio }}</strong></p>
-
-            <button :class="item.clase" @click="cambiarClase(index)">
-              {{ item.clase == 'nover' ? 'Ver esta película ❤' : 'No quiero ver esta película 💔' }}
+            <h3 class="card-title">{{ receta.titulo }}</h3>
+            <!-- Mostrar instrucciones solo en el modal -->
+            <button @click="mostrarModal(receta)" class="ver boton">
+              {{ receta.clase === 'nover' ? 'Ver esta receta ❤' : 'No quiero ver esta receta 💔' }}
             </button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Modal -->
+
+    
+    <div class="modal" :class="{ 'modal-show': recetaSeleccionada !== null }">
+      <div class="modal-content">
+        <div class="row">
+        <span class="cerrar" @click="cerrarModal">&times;</span>
+        <h2>{{ recetaSeleccionada ? recetaSeleccionada.titulo : '' }}</h2>
+        <p>{{ recetaSeleccionada ? recetaSeleccionada.instrucciones : '' }}</p>
+      </div>
+      </div>
+    </div>
   </div>
 </template>
 
-
 <script>
+import axios from 'axios';
+
 export default {
-  data: function () {
+  data() {
     return {
-      peliculas: [
-        {
-                titulo : "hercules",
-                img : "img/hercules.jpg",
-                descripcion : "Un legendario hombre, dotado de una fuerza descomunal, combate contra el malvado Hades mientras lucha por tomar su lugar entre los dioses. Fue el propio Hades quien, siendo él niño, lo secuestró de entre los dioses y lo envío al mundo de los mortales, privándole de sus derechos. Ahora que es adolescente, peleará por volver a estar entre los suyos.",
-                anio: 1997,
-                clase: 'nover'
-            },
-            {
-                titulo: "Aladin",
-                img: "img/aladin.jpg",
-                descripcion: "Aladdin es un adorable pilluelo que conoce a la princesa Jasmine y a un genio poderoso, bromista y grandioso. Después de hacerse amigos, el trío pronto debe unir fuerzas para evitar que el malvado hechicero Jafar se haga cargo del reino de Jasmine..",
-                anio: 1992,
-                clase: 'nover'
-            },
-            {
-                titulo : "101 Dalmatas",
-                img: "img/101.jpg",
-                descripcion : "Una pareja de dálmatas, Pongo y Perdita, tienen hermosos cachorros después de casarse e independizarse gracias a sus dueños Anita y Roger. Pero la malvada Cruella De Vil, amiga de Anita, los quiere comprar, al no permitírselo manda a dos matones para que los secuestren.",
-                anio: 1961,
-                clase: 'nover'
-            },
-            {
-                titulo : "Lilo y Stich",
-                img : "img/lilo.jpg",
-                descripcion : "Lilo es una niña hawaiana que se siente sola y decide adoptar un perro muy feo al que llama Stitch. Este sería la mascota perfecta si no fuera en realidad un experimento genético que ha escapado de un planeta alienígena y que ha llegado a la Tierra por casualidad.",
-                anio:2002,
-                clase: 'nover'
-            },
-            {
-                titulo : "Mary Poppins",
-                img : "img/mary_poppins.jpg",
-                descripcion : "La vida de dos niños rebeldes que pretenden llamar la atención de sus padres haciendo la vida imposible a todas las niñeras, se verá alterada con la llegada de Mary Poppins, una institutriz que baja de las nubes usando su paraguas como paracaídas.",
-                anio: 1964,
-                clase: 'nover'
-            },
-            {
-
-                titulo : "Peter Pan",
-                img : "img/peter_pan.jpg",
-                descripcion : "Peter y Campanita llevan a tres niños al país de Nunca Jamás para ver a los niños perdidos, a los indios, al capitán Garfio y a sus piratas", 
-                anio:2003  ,
-                clase: 'nover'       
-            },
-            {
-
-                titulo : "El rey leon",
-                img : "img/leon.jpg",
-                descripcion : "Tras la muerte de su padre, Simba deberá enfrentarse a su tío para recuperar el trono de Rey de la Selva. Timón y Pumba le acompañarán en su misión.", 
-                anio:2001  ,
-                clase: 'nover'       
-            },
-            {
-
-                titulo : "Alicia en el pais de las maravillas",
-                img : "img/alicia.jpg",
-                descripcion : "La historia cuenta cómo una niña llamada Alicia cae por un agujero, encontrándose en un mundo peculiar y extraño, poblado por humanos y criaturas antropomórficas.", 
-                anio:1998  ,
-                clase: 'nover'       
-            },
-            {
-
-                titulo : "Los inbreibles",
-                img : "img/increibles.jpg",
-                descripcion : "Un súper héroe retirado lucha contra el aburrimiento en un suburbio y junto con su familia tiene la oportunidad de salvar al mundo.", 
-                anio:2005  ,
-                clase: 'nover'       
-            }
-      ],
+      recetas: [],
+      recetaSeleccionada: null, // Guardar la receta seleccionada para mostrar en el modal
     };
   },
-  methods: {
-    cambiarClase: function (index) {
-      this.peliculas[index].clase = this.peliculas[index].clase === 'nover' ? 'ver' : 'nover';
-    },
+  mounted() {
+    this.obtenerRecetas();
   },
-  filters: {
-    capitalize: function (value) {
-      if (!value) return '';
-      value = value.toString();
-      return value.charAt(0).toUpperCase() + value.slice(1);
+  methods: {
+    async obtenerRecetas() {
+      try {
+        const response = await axios.get('https://www.themealdb.com/api/json/v1/1/search.php?s=chicken');
+        this.recetas = response.data.meals.map((receta) => ({
+          titulo: receta.strMeal,
+          img: receta.strMealThumb,
+          instrucciones: receta.strInstructions,
+          categoria: receta.strCategory,
+          area: receta.strArea,
+          clase: 'nover',
+        }));
+      } catch (error) {
+        console.error('Error al obtener recetas:', error);
+      }
+    },
+    mostrarModal(receta) {
+      this.recetaSeleccionada = receta;
+    },
+    cerrarModal() {
+      this.recetaSeleccionada = null;
     },
   },
 };
-
-
-
-
 </script>
 
 <style scoped>
-
-
-
-.nover {
-    
-    color: #FFFFFF;
-    background-color:green;
-    padding: 10px 20px;  
-    border: none;  
-    border-radius: 25px;  
-    font-size: 16px;  
-    cursor: pointer;  
-    transition: transform 0.3s, box-shadow 0.3s;  
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  
-    outline: none; 
+/* Agregar estilos para el modal */
+.modal {
+  display: none; /* Ocultar el modal por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
 }
 
-.ver:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+.modal-show {
+  display: flex; /* Mostrar el modal cuando se activa */
 }
 
-.nover:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-.ver {
-  
-    color: #fbfbfb; 
- background-color:red;
-    padding: 10px 20px;  
-    border: none;  
-    border-radius: 25px;  
-    font-size: 16px;  
-    cursor: pointer;  
-    transition: transform 0.3s, box-shadow 0.3s;  
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  
-    outline: none; 
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-
-.ver:active {
-    transform: scale(1);  
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  
+.cerrar {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-
-
+.cerrar:hover {
+  color: black;
+}
 </style>

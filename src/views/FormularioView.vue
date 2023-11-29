@@ -1,52 +1,44 @@
 <template>
   <div class="container">
-    <div class="form">
+    <div class="form animate__animated animate__bounceIn">
+      <form @submit.prevent="guardarReceta">
+        <div class="form-group">
+          <label>Título:</label>
+          <input type="text" v-model.trim="form_data.title" placeholder="Título" required />
+        </div>
 
-    <form class="animate__animated animate__bounceIn" @submit.prevent="guardarPelicula(form_data)">
-      <div class="form-group">
-        <label>Título:</label>
-        <input type="text" v-model.trim="form_data.title" placeholder="Titulo" required />
-      </div>
+        <div class="form-group">
+          <label>Receta:</label>
+          <textarea v-model="form_data.descripcion" rows="4"></textarea>
+        </div>
 
-      <div class="form-group">
-        <label for="descripcion">Descripción:</label>
-        <textarea class="form-control" id="descripcion" v-model="form_data.descripcion" rows="4"></textarea>
-      </div>
-
-      <div class="form-group">
-          <label>¿Has visto esta película antes?</label>
+        <div class="form-group">
+          <label>¿Has hecho esta receta antes?</label>
           <div class="form-check">
-            <input type="radio" id="seen" value="true" v-model="form_data.seleccionado" class="form-check-input">
-            <label for="seen" class="form-check-label">Sí, la he visto</label>
+            <input type="radio" id="seen" value="true" v-model="form_data.seenBefore" class="form-check-input">
+            <label for="seen" class="form-check-label">Sí</label>
           </div>
           <div class="form-check mt-2">
-            <input type="radio" id="notSeen" value="false" v-model="form_data.seleccionado" class="form-check-input">
+            <input type="radio" id="notSeen" value="false" v-model="form_data.seenBefore" class="form-check-input">
             <label for="notSeen" class="form-check-label">No, es la primera vez</label>
           </div>
         </div>
 
-      <div class="form-group">
-        <label for="selec">Seleccionar géneros:</label>
-        <select v-model="form_data.selected" multiple required id="selec">
-          <option>Terror</option>
-          <option>Animación</option>
-          <option>Ciencia Ficción</option>
-          <option>Drama</option>
-          <option>Otro</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label>Seleccionar:</label>
+          <select v-model="form_data.selected" multiple required>
+            <option>Receta salada</option>
+            <option>Receta dulce</option>
+            <option>Receta light</option>
+            <option>Receta para navidad</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label for="estreno">Estreno:</label>
-        <input v-model="form_data.estreno" type="number" required>
-      </div>
-
-      <button type="submit" class="btn btn-primary mb-4">Agregar Película</button>
-    </form>
-  </div>
+        <button type="submit" class="btn btn-primary mb-4">Agregar Receta</button>
+      </form>
+    </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'FormularioView',
@@ -57,26 +49,24 @@ export default {
         descripcion: '',
         seenBefore: false,
         selected: [],
-        estreno: '',
       },
     };
   },
   methods: {
-    guardarPelicula(form_data) {
-      // Agregar la fecha directamente al formulario
-      form_data.fecha = new Date().getTime();
-      console.log(form_data);
+    guardarReceta() {
+      this.form_data.fecha = new Date().getTime();
 
-      // Obtener datos existentes de la caché
       let cachedData = JSON.parse(localStorage.getItem("dato")) || [];
-
-      // Agregar el nuevo dato a la lista
-      cachedData.push(form_data);
-
-      // Guardar en la caché
+      cachedData.push(this.form_data);
       localStorage.setItem("dato", JSON.stringify(cachedData));
 
-      this.$router.push('/lista');
+      // Construye la cadena de consulta para los parámetros del formulario
+      const queryParams = Object.keys(this.form_data)
+        .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(this.form_data[key]))
+        .join('&');
+
+      // Redirige a la vista de lista con los parámetros en la URL
+      this.$router.push({ path: '/lista', query: queryParams });
     },
   },
 };

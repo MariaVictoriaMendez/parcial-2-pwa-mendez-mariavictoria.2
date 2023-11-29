@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h2 class="animate__animated animate__backInDown">Lista de peliculas que tenes que ver este fin de semana:</h2>
+    <h2 class="animate__animated animate__backInDown">Tips para hacer las mejores recetas:</h2>
        <PastillasInfo/>
        <DetallesComponent/>
     <!--componente-->

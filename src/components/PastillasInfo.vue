@@ -19,26 +19,26 @@ export default {
     return {
       pastillas: [
         {
-          titulo: "Ambientación perfecta",
-          descripcion: "Asegúrate de tener una habitación oscura, usa cortinas opacas y luces tenues para recrear el ambiente del cine en casa.",
+          titulo: " Tiempo y Paciencia",
+          descripcion: "Da tiempo a que los sabores se mezclen cocinando a fuego lento; la paciencia mejora el resultado.",
           img: "img/pastilla1.png",
           clase: true,
         }, 
         {
-                    titulo:"Sonido envolvente" ,
-                    descripcion: "Utiliza un sistema de sonido de calidad. Si es posible, opta por un sistema surround para que el audio te envuelva por completo.",
+                    titulo:"Organización Eficiente" ,
+                    descripcion: "Organiza los ingredientes antes de comenzar para agilizar la preparación y evitar olvidos.",
                     img: "img/pastilla2.png",
                     clase: true
                 },
                 {
-                    titulo:"Snacks listos",
-                    descripcion:"Prepara tus snacks favoritos: palomitas de maíz, nachos o cualquier delicia que te guste para acompañar tu película." ,
+                    titulo:"Innovación en Sabores",
+                    descripcion:"Experimenta con hierbas y especias para dar un toque único y sorprendente a tus platillos." ,
                     img: "img/pastilla3.png",
                     clase: true
                 },
                 {
-                    titulo:"Evita distracciones del celu",
-                    descripcion: "Pone el celular en modo avion, así podes aprovechar y disfrutar la pelicula como corresponde sin distracciones",
+                    titulo:"Tiempo y Paciencia",
+                    descripcion: "Da tiempo a que los sabores se mezclen cocinando a fuego lento; la paciencia mejora el resultado.",
                     img: "img/celu.png",
                     clase: false
                 }
