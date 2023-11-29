@@ -5,14 +5,14 @@
         <a class="navbar-brand text-white text-center" href="#">Parcial 2 - Mendez, María Victoria - PWA</a>
       </div>
       <ul>
-        <li><router-link to="/">Peliculas</router-link></li>
+        <li><router-link to="/">Recetas</router-link></li>
         <li><router-link to="/formulario">formulario</router-link></li>
         <li><router-link to="/lista">lista</router-link></li>
       </ul>
     </nav>
-<img src="img/banner.jpg" alt="Banner de Disney" class="img-fluid mb-4">
+<img src="img/banner.jpg" alt="Banner de Recetas" class="img-fluid mb-4">
     <header class="my-4">
-      <h1 class="animate__animated animate__backInDown" id="peliculas">Películas de Disney</h1>
+      <h1 class="animate__animated animate__backInDown" id="Recetas">Tus recetas</h1>
     </header>
 
     <router-view/>
