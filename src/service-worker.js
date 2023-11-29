@@ -1,5 +1,3 @@
-// service-worker.js
-
 const cacheName = 'my-app';
 const filesToCache = [
   '/',
@@ -10,6 +8,7 @@ const filesToCache = [
   '/img/logo.png',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css', 
   'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
+  'https://api.recetas.com', // Agrega la URL de tu API aquí
 ];
 
 self.addEventListener('install', (event) => {
@@ -25,6 +24,18 @@ self.addEventListener('fetch', (event) => {
     caches.match(event.request).then(async (response) => {
       if (response) {
         return response; 
+      }
+
+      // Si la solicitud es para la API de recetas
+      if (event.request.url.startsWith('https://api.recetas.com')) {
+        try {
+          const apiResponse = await fetch(event.request.clone());
+          const cache = await caches.open(cacheName);
+          cache.put(event.request, apiResponse.clone());
+          return apiResponse;
+        } catch (error) {
+          console.error('Error al cachear la respuesta de la API:', error);
+        }
       }
 
       // Si la solicitud es para una imagen en la carpeta '/img/'

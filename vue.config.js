@@ -11,7 +11,7 @@ module.exports = {
       background_color: '#9400D3',
       icons: [
         {
-          src: 'img/logo.png', // Ruta relativa al directorio del proyecto
+          src: 'img/logo.png',
           sizes: '64x64',
           type: 'image/png',
         },
