@@ -19,14 +19,15 @@
 
     
     <div class="modal" :class="{ 'modal-show': recetaSeleccionada !== null }">
-      <div class="modal-content">
-        <div class="row">
-        <span class="cerrar" @click="cerrarModal">&times;</span>
-        <h2>{{ recetaSeleccionada ? recetaSeleccionada.titulo : '' }}</h2>
-        <p>{{ recetaSeleccionada ? recetaSeleccionada.instrucciones : '' }}</p>
-      </div>
-      </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <span class="cerrar" @click="cerrarModal">&times;</span>
+      <h2>{{ recetaSeleccionada ? recetaSeleccionada.titulo : '' }}</h2>
+      <img :src="recetaSeleccionada ? recetaSeleccionada.img : ''" alt="Imagen de receta" class="modal-img">
+      <p>{{ recetaSeleccionada ? recetaSeleccionada.instrucciones : '' }}</p>
     </div>
+  </div>
+</div>
   </div>
 </template>
 
@@ -72,6 +73,7 @@ export default {
 <style scoped>
 /* Agregar estilos para el modal */
 .modal {
+  padding: 20px;
   display: none; /* Ocultar el modal por defecto */
   position: fixed;
   top: 0;
