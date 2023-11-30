@@ -12,15 +12,14 @@
             <p class="card-text mb-auto"><span>Tipo de receta: </span>
               <span class="normal" v-for="(x, index) in item.selected" :key="index">{{ x }}</span>
             </p>
-            
 
-            <p><span>¿Has hecho esta receta ntes? </span>
+            <p><span>¿Has hecho esta receta antes? </span>
               <span v-if="item.seenBefore">Sí</span>
-<span v-else>No, es la primera vez</span>
+              <span v-else>No, es la primera vez</span>
             </p>
 
             <div class="center">
-              <button class="borrar boton" @click="borrar(item)">Borrar</button>
+              <button class="borrar boton" @click="borrar(item)">Borrar Receta</button>
             </div>
           </div>
         </div>
@@ -31,61 +30,50 @@
   </div>
 </template>
 
-
-
 <script>
 export default {
   name: 'VerView',
-  data:function(){
-      return {
-        local:[],
-        sin_datos: ""
-      }
+  data() {
+    return {
+      local: [],
+      sin_datos: ""
+    };
   },
 
-
-      
-mounted:function(){
-    console.log("se monto")
+  mounted() {
+    console.log("se monto");
     this.ver_local();
   },
 
-  
-  methods:{
-   
-  
+  methods: {
     ver_local: function () {
-    // Obtener datos existentes de la caché
-    if (localStorage.dato) {
-      this.local = JSON.parse(localStorage.getItem("dato"));
-    }
-
-    if (this.local.length === 0) {
-      this.sin_datos = "Carga todas las recetas que quieras hacer! ❤";
-    }
-  },    borrar:function(item){
-              
-      this.local= JSON.parse(localStorage.getItem ("dato"))
-
-  for (var i=0; i < this.local.length; i++){
-  
-      if (this.local[i].fecha == item.fecha ) {
-          var rta=confirm("Estas seguro que queres borrar " + this.local[i].titulo +"?" )
-            if (rta==true){
-              this.local.splice(i, 1);
-            }
-          
-            
-          }
+      // Obtener datos existentes de la caché
+      if (localStorage.dato) {
+        this.local = JSON.parse(localStorage.getItem("dato"));
       }
-  
 
-    localStorage.setItem("dato", JSON.stringify(this.local))
+      if (this.local.length === 0) {
+        this.sin_datos = "Carga todas las recetas que quieras hacer! ❤";
+      }
+    },
+    borrar: function (item) {
+      this.local = JSON.parse(localStorage.getItem("dato"));
 
-    this.ver_local(); 
+      for (var i = 0; i < this.local.length; i++) {
+        if (this.local[i].fecha == item.fecha) {
+          var rta = confirm("Estas seguro que quieres borrar " + this.local[i].title + "?");
+          if (rta == true) {
+            this.local.splice(i, 1);
+          }
+        }
+      }
+
+      localStorage.setItem("dato", JSON.stringify(this.local));
+
+      this.ver_local();
     }
-}
-}
+  }
+};
 </script>
 
 <style scoped>
@@ -103,18 +91,16 @@ mounted:function(){
     text-align: center;
     font-size: 20px; /* Tamaño de texto de 12px */
   }
-  
+
   .borrar {
     background-color: #dc3545;
   }
-  
+
   .boton:hover {
     background-color: #bdc7c0;
-    
   }
-  p{
+
+  p {
     font-size: 20px;
   }
-  
-
 </style>
