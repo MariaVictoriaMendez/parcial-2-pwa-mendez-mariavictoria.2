@@ -8,7 +8,7 @@ const filesToCache = [
   '/img/logo.png',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css', 
   'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js',
-  'https://api.recetas.com', // Agrega la URL de tu API aquí
+  'https://www.themealdb.com/api/json/v1/1/search.php?s=chicken', 
 ];
 
 self.addEventListener('install', (event) => {
@@ -27,7 +27,7 @@ self.addEventListener('fetch', (event) => {
       }
 
       // Si la solicitud es para la API de recetas
-      if (event.request.url.startsWith('https://api.recetas.com')) {
+      if (event.request.url.startsWith('https://www.themealdb.com/api/json/v1/1/search.php?s=chicken')) {
         try {
           const apiResponse = await fetch(event.request.clone());
           const cache = await caches.open(cacheName);
