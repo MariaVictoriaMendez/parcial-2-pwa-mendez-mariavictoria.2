@@ -1,98 +1,19 @@
-<template>
-  <div id="app" v-cloak>
-    <nav id="nav" class="violet-background">
-      <div class="navbar">
-        <a class="navbar-brand text-white text-center" href="#">Parcial 2 - Mendez, María Victoria - PWA</a>
-      </div>
-      <ul>
-        <li><router-link to="/">Recetas</router-link></li>
-        <li><router-link to="/formulario">formulario</router-link></li>
-        <li><router-link to="/lista">lista</router-link></li>
-      </ul>
-    </nav>
-<img src="img/banner.jpg" alt="Banner de Recetas" class="img-fluid mb-4">
-    <header class="my-4">
-      <h1 class="animate__animated animate__backInDown" id="Recetas">Tus recetas</h1>
-    </header>
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import AnimateCSS from 'animate.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-    <router-view/>
- <footer class="violet-background">
-        <ul>
-            <li><details>
-                <summary><span>&copy; Copyright 2023</span></summary>
-                <div>
-                    <p class="text-white">Todos los derechos reservados a María Victoria Méndez, alumna de la carrera de Diseño y Programación Web de la Escuela Da Vinci.</p>
-                </div>
-                </details></li>
-        </ul>
-    </footer>
-   
-  </div>
-</template>
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  background: #FFEEEE;  
-    background: -webkit-linear-gradient(to right, #9b8ed6, #FFEEEE);  
-    background: linear-gradient(to right, #9b8ed6, #FFEEEE); 
-    color: #333333;
-}
+// @ts-ignore
+import 'bootstrap/dist/js/bootstrap.min.js';
 
+import './service-worker'
 
+Vue.config.productionTip = false
 
-
-
-.violet-background {
-  background-color: #9400D3;
-  width: 100%;
-  padding: 10px;
-  border: none; 
-  margin: 0; 
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-
-}
-
-#nav {
-  padding: 10px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #FFEEEE;
-  text-align: center;
-}
-
-#nav a.router-link-exact-active {
-  color: pink;
-  color: white;
-}
-
-ul {
-  list-style: none;
-  border: none; /* Elimina el borde */
-}
-
-ul li {
-  display: inline-block;
-  padding: 10px;
-  margin-left: 10px;
-  font-size: 1em;
-  color: #FFEEEE;
-}
-
-footer {
-  margin-bottom: 0px;
-  margin-top: 50px;
-  font-size: 20px;
-  font-style: italic;
-  color: #FFEEEE;
-  bottom: 0;
-
-}
-
-</style>
+new Vue({
+  router,
+  AnimateCSS,
+  render: h => h(App)
+}).$mount('#app')
