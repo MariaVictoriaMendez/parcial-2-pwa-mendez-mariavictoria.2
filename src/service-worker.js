@@ -1,8 +1,9 @@
 const cacheName = 'my-app';
 const filesToCache = [
   '/',
-  '/index.html',  // Asegúrate de incluir el archivo index.html
+  '/index.html',  
   '/main.js',
+  '/router/index.js',
   '/registerServiceWorker.js',
   '/service-worker.js',
   '/img/logo.png',
@@ -14,6 +15,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(cacheName).then((cache) => {
       return cache.addAll(filesToCache);
+      
     })
   );
 });
@@ -25,7 +27,6 @@ self.addEventListener('fetch', (event) => {
         return response; 
       }
 
-      // Si la solicitud es para la API de recetas
       if (event.request.url.startsWith('https://www.themealdb.com/api/json/v1/1/search.php?s=chicken')) {
         try {
           const apiResponse = await fetch(event.request.clone());
@@ -34,11 +35,11 @@ self.addEventListener('fetch', (event) => {
           return apiResponse;
         } catch (error) {
           console.error('Error al cachear la respuesta de la API:', error);
-          return new Response('No hay conexión a Internet'); // Devuelve una respuesta alternativa
+          return new Response('No hay conexión a Internet'); 
         }
       }
 
-      // Si la solicitud es para una imagen en la carpeta '/img/'
+     
       if (event.request.url.includes('/img/')) {
         try {
           const clonedResponse = await fetch(event.request.clone());
